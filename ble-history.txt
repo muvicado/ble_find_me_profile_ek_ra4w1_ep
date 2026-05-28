@@ -1,0 +1,5 @@
+  501  tail -f ~/e2_studio/workspace/ble_find_me_profile_ek_ra4w1_ep/JLinkLog.log 
+  503  cd ~/e2_studio/workspace/ble_find_me_profile_ek_ra4w1_ep/
+  504  tail -f ./JLinkLog.log
+  505  history 8
+  506  history 8 >> ble-history.txt

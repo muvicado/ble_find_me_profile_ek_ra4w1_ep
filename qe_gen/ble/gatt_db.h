@@ -33,7 +33,9 @@ typedef enum
     BLE_IAS_DECL_HDL = 0x0011,
     BLE_IAS_GAT_INC_HDL = 0x0012,
     BLE_IAS_ALERT_LEVEL_DECL_HDL = 0x0013,
-    BLE_IAS_ALERT_LEVEL_VAL_HDL = 0x0014,
+    BLE_IAS_ALERT_LEVEL_VAL_HDL  = 0x0014,
+    BLE_TOGGLE_LED_DECL_HDL      = 0x0015,
+    BLE_TOGGLE_LED_VAL_HDL       = 0x0016,
 } e_ble_attr_hdl_t;
 
 #define BLE_GAPS_DEV_NAME_LEN (128)
@@ -44,5 +46,6 @@ typedef enum
 #define BLE_GATS_SERV_CHGED_LEN (4)
 #define BLE_GATS_SERV_CHGED_CLI_CNFG_LEN (2)
 #define BLE_IAS_ALERT_LEVEL_LEN (1)
+#define BLE_TOGGLE_LED_LEN      (1)
 
 #endif /* GATT_DB_H */

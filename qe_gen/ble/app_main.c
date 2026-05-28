@@ -328,6 +328,20 @@ void gatts_cb(uint16_t type, ble_status_t result, st_ble_gatts_evt_data_t *p_dat
     {
 /* Hint: Add cases of GATT Server event macros defined as BLE_GATTS_XXX */
 /* Start user code for GATT Server callback function event process. Do not edit comment generated here */
+        case BLE_GATTS_EVENT_DB_ACCESS_IND:
+        {
+            st_ble_gatts_db_access_evt_t *db_access = (st_ble_gatts_db_access_evt_t *)p_data->p_param;
+            if (db_access->p_params->attr_hdl == BLE_TOGGLE_LED_VAL_HDL)
+            {
+                if (db_access->p_params->db_op & (BLE_GATT_DB_WRITE | BLE_GATT_DB_WRITE_WITHOUT_RSP))
+                {
+                    uint8_t led_state = db_access->p_params->value.p_value[0];
+                    LED_LED1OnOff(led_state ? BSP_IO_LEVEL_LOW : BSP_IO_LEVEL_HIGH);
+                    APP_PRINT("\nTOGGLE_LED written: %d\n", led_state);
+                }
+            }
+        } break;
+
         case BLE_GATTS_EVENT_CONN_IND:
         {
             /* LED1 turn on and the message print on connection established */

@@ -122,6 +122,9 @@ static const uint8_t gs_gatt_const_uuid_arr[] =
     /* Alert Level : 42 */
     0x06, 0x2A,
 
+    /* TOGGLE_LED : 44 */
+    0x01, 0xFF,
+
 };
 
 static uint8_t gs_gatt_value_arr[] =
@@ -142,6 +145,9 @@ static uint8_t gs_gatt_value_arr[] =
     0x00,
 
     /* Alert Level */
+    0x00,
+
+    /* TOGGLE_LED */
     0x00,
 
 };
@@ -192,6 +198,11 @@ static const uint8_t gs_gatt_const_value_arr[] =
     0x14, 0x00, // Attr Handle
     0x06, 0x2A, // UUID
 
+    /* TOGGLE_LED */
+    0x0A,       // Properties: Read | Write
+    0x16, 0x00, // Attr Handle
+    0x01, 0xFF, // UUID
+
 };
 
 static const uint8_t gs_gatt_db_const_peer_specific_val_arr[] =
@@ -235,7 +246,7 @@ static const st_ble_gatts_db_uuid_cfg_t gs_gatt_type_table[] =
         /* First Occurrence for Type */
         0x0002,
         /* Last Occurrence for Type */
-        0x0013,
+        0x0015,
     },
 
     /* 3 : Device Name */
@@ -344,6 +355,16 @@ static const st_ble_gatts_db_uuid_cfg_t gs_gatt_type_table[] =
         42,
         /* First Occurrence for Type */
         0x0014,
+        /* Last Occurrence for Type */
+        0x0000,
+    },
+
+    /* 14 : TOGGLE_LED */
+    {
+        /* UUID Offset */
+        44,
+        /* First Occurrence for Type */
+        0x0016,
         /* Last Occurrence for Type */
         0x0000,
     },
@@ -685,7 +706,7 @@ static const st_ble_gatts_db_attr_cfg_t gs_gatt_db_attr_table[] =
         /* Value Size */
         5,
         /* Next Attribute Type Index */
-        0x0000,
+        0x0015,
         /* UUID Offset */
         6,
         /* Value */
@@ -707,6 +728,40 @@ static const st_ble_gatts_db_attr_cfg_t gs_gatt_db_attr_table[] =
         42,
         /* Value */
         (uint8_t *)(gs_gatt_value_arr + 140),
+    },
+
+    /* Handle : 0x0015 */
+    /* TOGGLE_LED : Characteristic Declaration */
+    {
+        /* Properties */
+        BLE_GATT_DB_READ,
+        /* Auxiliary Properties */
+        BLE_GATT_DB_FIXED_LENGTH_PROPERTY,
+        /* Value Size */
+        5,
+        /* Next Attribute Type Index */
+        0x0000,
+        /* UUID Offset */
+        6,
+        /* Value */
+        (uint8_t *)(gs_gatt_const_value_arr + 45),
+    },
+
+    /* Handle : 0x0016 */
+    /* TOGGLE_LED */
+    {
+        /* Properties */
+        BLE_GATT_DB_READ | BLE_GATT_DB_WRITE,
+        /* Auxiliary Properties */
+        BLE_GATT_DB_FIXED_LENGTH_PROPERTY,
+        /* Value Size */
+        1,
+        /* Next Attribute Type Index */
+        0x0000,
+        /* UUID Offset */
+        44,
+        /* Value */
+        (uint8_t *)(gs_gatt_value_arr + 141),
     },
 
 };
@@ -797,6 +852,18 @@ static const st_ble_gatts_db_char_cfg_t gs_gatt_characteristic[] =
         2,
     },
 
+    /* 7 : TOGGLE_LED */
+    {
+        /* Number of Attributes */
+        {
+            2,
+        },
+        /* Start Handle */
+        0x0015,
+        /* Service Index */
+        2,
+    },
+
 };
 
 static const st_ble_gatts_db_serv_cfg_t gs_gatt_service[] =
@@ -848,11 +915,11 @@ static const st_ble_gatts_db_serv_cfg_t gs_gatt_service[] =
         /* Service Start Handle */
         0x0011,
         /* Service End Handle */
-        0x0014,
+        0x0016,
         /* Characteristic Start Index */
         6,
         /* Characteristic End Index */
-        6,
+        7,
     },
 
 };

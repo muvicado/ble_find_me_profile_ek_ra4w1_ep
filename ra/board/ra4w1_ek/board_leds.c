@@ -33,7 +33,8 @@
 static const uint16_t g_bsp_prv_leds[] =
 {
     (uint16_t) BSP_IO_PORT_01_PIN_06,  ///< LED0
-    (uint16_t) BSP_IO_PORT_04_PIN_04,  ///< LED1
+    (uint16_t) BSP_IO_PORT_02_PIN_13,  ///< LED1 (ECO2 RSK)
+//  (uint16_t) BSP_IO_PORT_04_PIN_04,  ///< LED1
 };
 
 /***********************************************************************************************************************

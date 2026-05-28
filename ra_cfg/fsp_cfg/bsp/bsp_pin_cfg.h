@@ -6,6 +6,8 @@
 /* Common macro for FSP header files. There is also a corresponding FSP_FOOTER macro at the end of this file. */
 FSP_HEADER
 
+#define LED_HEARTBEAT (BSP_IO_PORT_02_PIN_13) /* ECO2 hreatbeat */
+
 extern const ioport_cfg_t g_bsp_pin_cfg; /* RA4W1-EK.pincfg */
 
 void BSP_PinConfigSecurityInit();

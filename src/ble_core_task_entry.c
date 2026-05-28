@@ -50,7 +50,7 @@ void ble_core_task_entry(void *pvParameters)
     APP_PRINT(EP_INFO);
 
     /* Turn off the LED */
-    LED_LED1OnOff(BSP_IO_LEVEL_HIGH);
+    LED_LED1OnOff(BSP_IO_LEVEL_LOW); // LOW is OFF for ECO2 RSK
 
     /* Execute GPT timer */
     gpt_timer();

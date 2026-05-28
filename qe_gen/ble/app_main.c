@@ -331,7 +331,7 @@ void gatts_cb(uint16_t type, ble_status_t result, st_ble_gatts_evt_data_t *p_dat
         case BLE_GATTS_EVENT_CONN_IND:
         {
             /* LED1 turn on and the message print on connection established */
-            LED_LED1OnOff(BSP_IO_LEVEL_LOW);
+            LED_LED1OnOff(BSP_IO_LEVEL_HIGH); // HIGH is ON for ECO2 RSK
             APP_PRINT("\nBLE Server received Connection request from Device.\n");
             APP_PRINT("BLE Server connected with the device\n");
             APP_PRINT("LED1 turn ON\n\n");
@@ -351,7 +351,7 @@ void gatts_cb(uint16_t type, ble_status_t result, st_ble_gatts_evt_data_t *p_dat
                 APP_ERR_TRAP(err);
             }
             /* LED1 turn off and the message print on disconnection */
-            LED_LED1OnOff(BSP_IO_LEVEL_HIGH);
+            LED_LED1OnOff(BSP_IO_LEVEL_LOW); // LOW is OFF for ECO2 RSK
             APP_PRINT("\nBLE Service received Disconnection request from Device\n");
             APP_PRINT("BLE disconnected with the device \n");
             APP_PRINT("LED1 turn OFF\n\n");

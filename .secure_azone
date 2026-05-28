@@ -17,6 +17,7 @@
             <slot name="P204.CM4" secure="false"/>
             <slot name="P205.CM4" secure="false"/>
             <slot name="P206.CM4" secure="false"/>
+            <slot name="P213.CM4" secure="false"/>
         </peripheral>
         <peripheral name="PORT3.CM4" group="PORT">
             <slot name="P300.CM4" secure="false"/>

@@ -1,20 +1,7 @@
 /***********************************************************************************************************************
-* DISCLAIMER
-* This software is supplied by Renesas Electronics Corporation and is only intended for use with Renesas products. No
-* other uses are authorized. This software is owned by Renesas Electronics Corporation and is protected under all
-* applicable laws, including copyright laws.
-* THIS SOFTWARE IS PROVIDED "AS IS" AND RENESAS MAKES NO WARRANTIES REGARDING
-* THIS SOFTWARE, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING BUT NOT LIMITED TO WARRANTIES OF MERCHANTABILITY,
-* FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT. ALL SUCH WARRANTIES ARE EXPRESSLY DISCLAIMED. TO THE MAXIMUM
-* EXTENT PERMITTED NOT PROHIBITED BY LAW, NEITHER RENESAS ELECTRONICS CORPORATION NOR ANY OF ITS AFFILIATED COMPANIES
-* SHALL BE LIABLE FOR ANY DIRECT, INDIRECT, SPECIAL, INCIDENTAL OR CONSEQUENTIAL DAMAGES FOR ANY REASON RELATED TO THIS
-* SOFTWARE, EVEN IF RENESAS OR ITS AFFILIATES HAVE BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
-* Renesas reserves the right, without notice, to make changes to this software and to discontinue the availability of
-* this software. By using this software, you agree to the additional terms and conditions found by accessing the
-* following link:
-* http://www.renesas.com/disclaimer
+* Copyright (c) 2019 - 2024 Renesas Electronics Corporation and/or its affiliates
 *
-* Copyright (C) 2019-2022 Renesas Electronics Corporation. All rights reserved.
+* SPDX-License-Identifier: BSD-3-Clause
 ***********************************************************************************************************************/
 
 /******************************************************************************
@@ -112,6 +99,8 @@ void *g_ble_event_group_handle;
 /* Start user code for macro definitions. Do not edit comment generated here */
 extern uint32_t app_value;
 /* End user code. Do not edit comment generated here */
+
+
 
 /******************************************************************************
  Generated function prototype declarations
@@ -258,6 +247,8 @@ void gap_cb(uint16_t type, ble_status_t result, st_ble_evt_data_t *p_data)
         {
             /* Get BD address for Advertising */
             R_BLE_VS_GetBdAddr(BLE_VS_ADDR_AREA_REG, BLE_GAP_ADDR_RAND);
+            APP_PRINT("\nBLE Server Started Advertising.\n");
+            APP_PRINT("BLE Server is waiting for connection request from Device\n");
         } break;
 
         case BLE_GAP_EVENT_CONN_IND:
@@ -282,6 +273,8 @@ void gap_cb(uint16_t type, ble_status_t result, st_ble_evt_data_t *p_data)
             g_conn_hdl = BLE_GAP_INVALID_CONN_HDL;
             /* Include header file that contained BLE Abstraction (rm_ble_abs) module instance, when application work on RTOS. */
             RM_BLE_ABS_StartLegacyAdvertising(&g_ble_abs0_ctrl, &g_ble_advertising_parameter);
+            APP_PRINT("\nBLE Server Started Advertising.\n");
+            APP_PRINT("BLE Server is waiting for connection request from Device\n");
         } break;
 
         case BLE_GAP_EVENT_CONN_PARAM_UPD_REQ:

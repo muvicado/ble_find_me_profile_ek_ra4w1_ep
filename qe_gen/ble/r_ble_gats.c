@@ -122,7 +122,7 @@ ble_status_t R_BLE_GATS_IndicateServChged(uint16_t conn_hdl, const st_ble_gats_s
 }
 
 /*----------------------------------------------------------------------------------------------------------------------
-    Toggle LED characteristic : Toggle the BLUE LED
+    Toggle LED characteristic : Toggle the BLUE LED on the EVK board
 ----------------------------------------------------------------------------------------------------------------------*/
 
 /* Toggle LED characteristic definition */

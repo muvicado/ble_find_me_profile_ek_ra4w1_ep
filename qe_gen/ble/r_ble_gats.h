@@ -73,7 +73,7 @@ ble_status_t R_BLE_GATS_SetServChgedCliCnfg(const uint16_t *p_value);
 ble_status_t R_BLE_GATS_GetServChgedCliCnfg(uint16_t *p_value);
 
 /*----------------------------------------------------------------------------------------------------------------------
-    Toggle LED Characteristic : Toggle the BLUE LED
+    Toggle LED Characteristic : Toggle the BLUE LED on the EVK board
 ----------------------------------------------------------------------------------------------------------------------*/
 /***************************************************************************//**
  * @brief     Set Toggle LED characteristic value to the local GATT database.

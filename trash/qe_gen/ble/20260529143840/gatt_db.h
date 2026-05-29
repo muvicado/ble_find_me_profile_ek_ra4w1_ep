@@ -58,7 +58,7 @@ typedef enum
 #define BLE_GAPS_RSLV_PRIV_ADDR_ONLY_LEN (1)
 #define BLE_GATS_SERV_CHGED_LEN (4)
 #define BLE_GATS_SERV_CHGED_CLI_CNFG_LEN (2)
-#define BLE_GATS_TOGGLE_LEN (2)
+#define BLE_GATS_TOGGLE_LEN (1)
 #define BLE_IAS_ALERT_LEVEL_LEN (1)
 
 #endif /* GATT_DB_H */

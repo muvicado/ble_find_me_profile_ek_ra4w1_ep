@@ -122,26 +122,26 @@ ble_status_t R_BLE_GATS_IndicateServChged(uint16_t conn_hdl, const st_ble_gats_s
 }
 
 /*----------------------------------------------------------------------------------------------------------------------
-    Toggle LED characteristic : Toggle the BLUE LED
+    Toggle Blue LED characteristic
 ----------------------------------------------------------------------------------------------------------------------*/
 
-/* Toggle LED characteristic definition */
+/* Toggle Blue LED characteristic definition */
 static const st_ble_servs_char_info_t gs_toggle_char = {
     .start_hdl    = BLE_GATS_TOGGLE_DECL_HDL,
     .end_hdl      = BLE_GATS_TOGGLE_VAL_HDL,
     .char_idx     = BLE_GATS_TOGGLE_IDX,
-    .app_size     = sizeof(uint16_t),
+    .app_size     = sizeof(uint8_t),
     .db_size      = BLE_GATS_TOGGLE_LEN,
-    .decode       = (ble_servs_attr_decode_t)decode_uint16_t,
-    .encode       = (ble_servs_attr_encode_t)encode_uint16_t,
+    .decode       = (ble_servs_attr_decode_t)decode_uint8_t,
+    .encode       = (ble_servs_attr_encode_t)encode_uint8_t,
 };
 
-ble_status_t R_BLE_GATS_SetToggle(const uint16_t *p_value)
+ble_status_t R_BLE_GATS_SetToggle(const uint8_t *p_value)
 {
     return R_BLE_SERVS_SetChar(&gs_toggle_char, BLE_GAP_INVALID_CONN_HDL, (const void *)p_value);
 }
 
-ble_status_t R_BLE_GATS_GetToggle(uint16_t *p_value)
+ble_status_t R_BLE_GATS_GetToggle(uint8_t *p_value)
 {
     return R_BLE_SERVS_GetChar(&gs_toggle_char, BLE_GAP_INVALID_CONN_HDL, (void *)p_value);
 }

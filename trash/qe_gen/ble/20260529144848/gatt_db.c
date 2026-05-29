@@ -65,20 +65,16 @@
  *  0x000F | 0x05,0x2A         | IN          | 0x00,0x00,0x00,0x00              | Service Changed characteristic value
  *  -------+-------------------+-------------+----------------------------------+---------------
  *  0x0010 | 0x02,0x29         | RD,WR       | 0x00,0x00                        | Client Characteristic Configuration descriptor
- *  -------+-------------------+-------------+----------------------------------+---------------
- *  0x0011 | 0x28,0x03         | RD          | 0x0A,0x12,0x00,0xe9,0x2a,0x2c... | Toggle LED characteristic Declaration
- *  -------+-------------------+-------------+----------------------------------+---------------
- *  0x0012 | 0xe9,0x2a,0x2c... | RD,WR       | 0x00,0x00                        | Toggle LED characteristic value
  *  ============================================================================================
  *  Immediate Alert Service
  *  ============================================================================================
- *  0x0013 | 0x28,0x00         | RD          | 0x02,0x18                        | Immediate Alert Service Declaration
+ *  0x0011 | 0x28,0x00         | RD          | 0x02,0x18                        | Immediate Alert Service Declaration
  *  -------+-------------------+-------------+----------------------------------+---------------
- *  0x0014 | 0x28,0x02         | RD          | 0x0C,0x00,0x12,0x00,0x01,0x18    | GATT Service Included Declaration
+ *  0x0012 | 0x28,0x02         | RD          | 0x0C,0x00,0x10,0x00,0x01,0x18    | GATT Service Included Declaration
  *  -------+-------------------+-------------+----------------------------------+---------------
- *  0x0015 | 0x28,0x03         | RD          | 0x04,0x16,0x00,0x06,0x2A         | Alert Level characteristic Declaration
+ *  0x0013 | 0x28,0x03         | RD          | 0x04,0x14,0x00,0x06,0x2A         | Alert Level characteristic Declaration
  *  -------+-------------------+-------------+----------------------------------+---------------
- *  0x0016 | 0x06,0x2A         | WW          | 0x00                             | Alert Level characteristic value
+ *  0x0014 | 0x06,0x2A         | WW          | 0x00                             | Alert Level characteristic value
  *  ============================================================================================
  
  */
@@ -133,13 +129,10 @@ static const uint8_t gs_gatt_const_uuid_arr[] =
     /* Client Characteristic Configuration : 38 */
     0x02, 0x29,
 
-    /* Toggle LED : 40 */
-    0xe9, 0x2a, 0x2c, 0x93, 0x90, 0xae, 0x58, 0x84, 0x84, 0x4b, 0x7f, 0xdb, 0x32, 0xf6, 0xa6, 0x3f,
-
-    /* Immediate Alert Service : 56 */
+    /* Immediate Alert Service : 40 */
     0x02, 0x18,
 
-    /* Alert Level : 58 */
+    /* Alert Level : 42 */
     0x06, 0x2A,
 
 };
@@ -160,12 +153,6 @@ static uint8_t gs_gatt_value_arr[] =
 
     /* Resolvable Private Address Only */
     0x00,
-
-    /* Service Changed : Client Characteristic Configuration */
-    0x00, 0x00,
-
-    /* Toggle LED */
-    0, 0,
 
     /* Alert Level */
     0x00,
@@ -208,27 +195,30 @@ static const uint8_t gs_gatt_const_value_arr[] =
     0x0F, 0x00, // Attr Handle
     0x05, 0x2A, // UUID
 
-    /* Toggle LED */
-    0x0A,       // Properties
-    0x12, 0x00, // Attr Handle
-    0xe9, 0x2a, 0x2c, 0x93, 0x90, 0xae, 0x58, 0x84, 0x84, 0x4b, 0x7f, 0xdb, 0x32, 0xf6, 0xa6, 0x3f, // UUID
-
     /* Included Service : GATT Service */
     0x0C, 0x00, // Start Handle
-    0x12, 0x00, // End Handle
+    0x10, 0x00, // End Handle
     0x01, 0x18, // UUID
 
     /* Alert Level */
     0x04,       // Properties
-    0x16, 0x00, // Attr Handle
+    0x14, 0x00, // Attr Handle
     0x06, 0x2A, // UUID
 
 };
 
-static const uint8_t gs_gatt_db_const_peer_specific_val_arr[] = { 0x00 };
+static const uint8_t gs_gatt_db_const_peer_specific_val_arr[] =
+{
+    /* Service Changed : Client Characteristic Configuration */
+    0x00, 0x00,
 
-static uint8_t gs_gatt_db_peer_specific_val_arr[] = { 0x00 };
+};
 
+#ifdef BLE_ABS_CFG_RF_CONNECTION_MAXIMUM /* for RA Family */
+static uint8_t gs_gatt_db_peer_specific_val_arr[sizeof(gs_gatt_db_const_peer_specific_val_arr)*(BLE_ABS_CFG_RF_CONNECTION_MAXIMUM+1)];
+#else /* RX23W or RE01B */
+static uint8_t gs_gatt_db_peer_specific_val_arr[sizeof(gs_gatt_db_const_peer_specific_val_arr)*(BLE_CFG_RF_CONN_MAX+1)];
+#endif
 static const st_ble_gatts_db_uuid_cfg_t gs_gatt_type_table[] =
 {
     /* 0 : Primary Service Declaration */
@@ -238,7 +228,7 @@ static const st_ble_gatts_db_uuid_cfg_t gs_gatt_type_table[] =
         /* First Occurrence for Type */
         0x0001,
         /* Last Occurrence for Type */
-        0x0013,
+        0x0011,
     },
 
     /* 1 : GAP Service */
@@ -258,7 +248,7 @@ static const st_ble_gatts_db_uuid_cfg_t gs_gatt_type_table[] =
         /* First Occurrence for Type */
         0x0002,
         /* Last Occurrence for Type */
-        0x0015,
+        0x0013,
     },
 
     /* 3 : Device Name */
@@ -328,7 +318,7 @@ static const st_ble_gatts_db_uuid_cfg_t gs_gatt_type_table[] =
         /* First Occurrence for Type */
         0x000D,
         /* Last Occurrence for Type */
-        0x0014,
+        0x0012,
     },
 
     /* 10 : Service Changed */
@@ -351,32 +341,22 @@ static const st_ble_gatts_db_uuid_cfg_t gs_gatt_type_table[] =
         0x0000,
     },
 
-    /* 12 : Toggle LED */
+    /* 12 : Immediate Alert Service */
     {
         /* UUID Offset */
         40,
         /* First Occurrence for Type */
-        0x0012,
+        0x0011,
         /* Last Occurrence for Type */
         0x0000,
     },
 
-    /* 13 : Immediate Alert Service */
+    /* 13 : Alert Level */
     {
         /* UUID Offset */
-        56,
+        42,
         /* First Occurrence for Type */
-        0x0013,
-        /* Last Occurrence for Type */
-        0x0000,
-    },
-
-    /* 14 : Alert Level */
-    {
-        /* UUID Offset */
-        58,
-        /* First Occurrence for Type */
-        0x0016,
+        0x0014,
         /* Last Occurrence for Type */
         0x0000,
     },
@@ -599,7 +579,7 @@ static const st_ble_gatts_db_attr_cfg_t gs_gatt_db_attr_table[] =
         /* Value Size */
         2,
         /* Next Attribute Type Index */
-        0x0013,
+        0x0011,
         /* UUID Offset */
         0,
         /* Value */
@@ -616,7 +596,7 @@ static const st_ble_gatts_db_attr_cfg_t gs_gatt_db_attr_table[] =
         /* Value Size */
         4,
         /* Next Attribute Type Index */
-        0x0014,
+        0x0012,
         /* UUID Offset */
         4,
         /* Value */
@@ -633,7 +613,7 @@ static const st_ble_gatts_db_attr_cfg_t gs_gatt_db_attr_table[] =
         /* Value Size */
         5,
         /* Next Attribute Type Index */
-        0x0011,
+        0x0013,
         /* UUID Offset */
         6,
         /* Value */
@@ -663,7 +643,7 @@ static const st_ble_gatts_db_attr_cfg_t gs_gatt_db_attr_table[] =
         /* Properties */
         BLE_GATT_DB_READ | BLE_GATT_DB_WRITE,
         /* Auxiliary Properties */
-        BLE_GATT_DB_FIXED_LENGTH_PROPERTY,
+        BLE_GATT_DB_FIXED_LENGTH_PROPERTY | BLE_GATT_DB_PEER_SPECIFIC_VAL_PROPERTY,
         /* Value Size */
         2,
         /* Next Attribute Type Index */
@@ -671,44 +651,10 @@ static const st_ble_gatts_db_attr_cfg_t gs_gatt_db_attr_table[] =
         /* UUID Offset */
         38,
         /* Value */
-        (uint8_t *)(gs_gatt_value_arr + 140),
+        (uint8_t *)(gs_gatt_db_peer_specific_val_arr + 0),
     },
 
     /* Handle : 0x0011 */
-    /* Toggle LED : Characteristic Declaration */
-    {
-        /* Properties */
-        BLE_GATT_DB_READ,
-        /* Auxiliary Properties */
-        BLE_GATT_DB_FIXED_LENGTH_PROPERTY,
-        /* Value Size */
-        19,
-        /* Next Attribute Type Index */
-        0x0015,
-        /* UUID Offset */
-        6,
-        /* Value */
-        (uint8_t *)(gs_gatt_const_value_arr + 34),
-    },
-
-    /* Handle : 0x0012 */
-    /* Toggle LED */
-    {
-        /* Properties */
-        BLE_GATT_DB_READ | BLE_GATT_DB_WRITE,
-        /* Auxiliary Properties */
-        BLE_GATT_DB_FIXED_LENGTH_PROPERTY | BLE_GATT_DB_128_BIT_UUID_FORMAT,
-        /* Value Size */
-        2,
-        /* Next Attribute Type Index */
-        0x0000,
-        /* UUID Offset */
-        40,
-        /* Value */
-        (uint8_t *)(gs_gatt_value_arr + 142),
-    },
-
-    /* Handle : 0x0013 */
     /* Immediate Alert Service : Primary Service Declaration */
     {
         /* Properties */
@@ -722,10 +668,10 @@ static const st_ble_gatts_db_attr_cfg_t gs_gatt_db_attr_table[] =
         /* UUID Offset */
         0,
         /* Value */
-        (uint8_t *)(gs_gatt_const_uuid_arr + 56),
+        (uint8_t *)(gs_gatt_const_uuid_arr + 40),
     },
 
-    /* Handle : 0x0014 */
+    /* Handle : 0x0012 */
     /* GATT Service : Included Service Declaration */
     {
         /* Properties */
@@ -739,10 +685,10 @@ static const st_ble_gatts_db_attr_cfg_t gs_gatt_db_attr_table[] =
         /* UUID Offset */
         4,
         /* Value */
-        (uint8_t *)(gs_gatt_const_value_arr + 53),
+        (uint8_t *)(gs_gatt_const_value_arr + 34),
     },
 
-    /* Handle : 0x0015 */
+    /* Handle : 0x0013 */
     /* Alert Level : Characteristic Declaration */
     {
         /* Properties */
@@ -756,10 +702,10 @@ static const st_ble_gatts_db_attr_cfg_t gs_gatt_db_attr_table[] =
         /* UUID Offset */
         6,
         /* Value */
-        (uint8_t *)(gs_gatt_const_value_arr + 59),
+        (uint8_t *)(gs_gatt_const_value_arr + 40),
     },
 
-    /* Handle : 0x0016 */
+    /* Handle : 0x0014 */
     /* Alert Level */
     {
         /* Properties */
@@ -771,9 +717,9 @@ static const st_ble_gatts_db_attr_cfg_t gs_gatt_db_attr_table[] =
         /* Next Attribute Type Index */
         0x0000,
         /* UUID Offset */
-        58,
+        42,
         /* Value */
-        (uint8_t *)(gs_gatt_value_arr + 144),
+        (uint8_t *)(gs_gatt_value_arr + 140),
     },
 
 };
@@ -852,26 +798,14 @@ static const st_ble_gatts_db_char_cfg_t gs_gatt_characteristic[] =
         1,
     },
 
-    /* 6 : Toggle LED */
+    /* 6 : Alert Level */
     {
         /* Number of Attributes */
         {
             2,
         },
         /* Start Handle */
-        0x0011,
-        /* Service Index */
-        1,
-    },
-
-    /* 7 : Alert Level */
-    {
-        /* Number of Attributes */
-        {
-            2,
-        },
-        /* Start Handle */
-        0x0015,
+        0x0013,
         /* Service Index */
         2,
     },
@@ -909,11 +843,11 @@ static const st_ble_gatts_db_serv_cfg_t gs_gatt_service[] =
         /* Service Start Handle */
         0x000C,
         /* Service End Handle */
-        0x0012,
+        0x0010,
         /* Characteristic Start Index */
         5,
         /* Characteristic End Index */
-        6,
+        5,
     },
 
     /* Immediate Alert Service */
@@ -925,13 +859,13 @@ static const st_ble_gatts_db_serv_cfg_t gs_gatt_service[] =
         /* Description */
         0,
         /* Service Start Handle */
-        0x0013,
+        0x0011,
         /* Service End Handle */
-        0x0016,
+        0x0014,
         /* Characteristic Start Index */
-        7,
+        6,
         /* Characteristic End Index */
-        7,
+        6,
     },
 
 };

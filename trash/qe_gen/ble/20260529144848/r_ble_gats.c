@@ -45,14 +45,14 @@ static const st_ble_servs_desc_info_t gs_serv_chged_cli_cnfg = {
     .encode   = (ble_servs_attr_encode_t)encode_uint16_t,
 };
 
-ble_status_t R_BLE_GATS_SetServChgedCliCnfg(const uint16_t *p_value)
+ble_status_t R_BLE_GATS_SetServChgedCliCnfg(uint16_t conn_hdl, const uint16_t *p_value)
 {
-    return R_BLE_SERVS_SetDesc(&gs_serv_chged_cli_cnfg, BLE_GAP_INVALID_CONN_HDL, (const void *)p_value);
+    return R_BLE_SERVS_SetDesc(&gs_serv_chged_cli_cnfg, conn_hdl, (const void *)p_value);
 }
 
-ble_status_t R_BLE_GATS_GetServChgedCliCnfg(uint16_t *p_value)
+ble_status_t R_BLE_GATS_GetServChgedCliCnfg(uint16_t conn_hdl, uint16_t *p_value)
 {
-    return R_BLE_SERVS_GetDesc(&gs_serv_chged_cli_cnfg, BLE_GAP_INVALID_CONN_HDL, (void *)p_value);
+    return R_BLE_SERVS_GetDesc(&gs_serv_chged_cli_cnfg, conn_hdl, (void *)p_value);
 }
 
 /*----------------------------------------------------------------------------------------------------------------------
@@ -122,38 +122,12 @@ ble_status_t R_BLE_GATS_IndicateServChged(uint16_t conn_hdl, const st_ble_gats_s
 }
 
 /*----------------------------------------------------------------------------------------------------------------------
-    Toggle LED characteristic : Toggle the BLUE LED
-----------------------------------------------------------------------------------------------------------------------*/
-
-/* Toggle LED characteristic definition */
-static const st_ble_servs_char_info_t gs_toggle_char = {
-    .start_hdl    = BLE_GATS_TOGGLE_DECL_HDL,
-    .end_hdl      = BLE_GATS_TOGGLE_VAL_HDL,
-    .char_idx     = BLE_GATS_TOGGLE_IDX,
-    .app_size     = sizeof(uint16_t),
-    .db_size      = BLE_GATS_TOGGLE_LEN,
-    .decode       = (ble_servs_attr_decode_t)decode_uint16_t,
-    .encode       = (ble_servs_attr_encode_t)encode_uint16_t,
-};
-
-ble_status_t R_BLE_GATS_SetToggle(const uint16_t *p_value)
-{
-    return R_BLE_SERVS_SetChar(&gs_toggle_char, BLE_GAP_INVALID_CONN_HDL, (const void *)p_value);
-}
-
-ble_status_t R_BLE_GATS_GetToggle(uint16_t *p_value)
-{
-    return R_BLE_SERVS_GetChar(&gs_toggle_char, BLE_GAP_INVALID_CONN_HDL, (void *)p_value);
-}
-
-/*----------------------------------------------------------------------------------------------------------------------
     GATT Service Server
 ----------------------------------------------------------------------------------------------------------------------*/
 
 /* GATT Service characteristics definition */
 static const st_ble_servs_char_info_t *gspp_chars[] = {
     &gs_serv_chged_char,
-    &gs_toggle_char,
 };
 
 /* GATT Service server definition */

@@ -60,34 +60,19 @@ ble_status_t R_BLE_GATS_IndicateServChged(uint16_t conn_hdl, const st_ble_gats_s
 
 /***************************************************************************//**
  * @brief     Set Service Changed cli cnfg descriptor value to the local GATT database.
+ * @param[in] conn_hdl Connection handle.
  * @param[in] p_value  Descriptor value to set.
  * @return    @ref ble_status_t
 *******************************************************************************/
-ble_status_t R_BLE_GATS_SetServChgedCliCnfg(const uint16_t *p_value);
+ble_status_t R_BLE_GATS_SetServChgedCliCnfg(uint16_t conn_hdl, const uint16_t *p_value);
 
 /***************************************************************************//**
  * @brief     Get Service Changed cli cnfg descriptor value from the local GATT database.
+ * @param[in] conn_hdl Connection handle.
  * @param[out] p_value  Output location for the acquired descriptor value.
  * @return    @ref ble_status_t
 *******************************************************************************/
-ble_status_t R_BLE_GATS_GetServChgedCliCnfg(uint16_t *p_value);
-
-/*----------------------------------------------------------------------------------------------------------------------
-    Toggle LED Characteristic : Toggle the BLUE LED
-----------------------------------------------------------------------------------------------------------------------*/
-/***************************************************************************//**
- * @brief     Set Toggle LED characteristic value to the local GATT database.
- * @param[in] p_value  Characteristic value to set.
- * @return    @ref ble_status_t
-*******************************************************************************/
-ble_status_t R_BLE_GATS_SetToggle(const uint16_t *p_value);
-
-/***************************************************************************//**
- * @brief     Get Toggle LED characteristic value from the local GATT database.
- * @param[out] p_value  Output location for the acquired descriptor value.
- * @return    @ref ble_status_t
-*******************************************************************************/
-ble_status_t R_BLE_GATS_GetToggle(uint16_t *p_value);
+ble_status_t R_BLE_GATS_GetServChgedCliCnfg(uint16_t conn_hdl, uint16_t *p_value);
 
 /*----------------------------------------------------------------------------------------------------------------------
     GATT Service Server
@@ -99,7 +84,6 @@ ble_status_t R_BLE_GATS_GetToggle(uint16_t *p_value);
 typedef enum {
     BLE_GATS_SERV_CHGED_IDX,
     BLE_GATS_SERV_CHGED_CLI_CNFG_IDX,
-    BLE_GATS_TOGGLE_IDX,
 } e_ble_gats_char_idx_t;
 
 /***************************************************************************//**
@@ -111,10 +95,6 @@ typedef enum {
     BLE_GATS_EVENT_SERV_CHGED_CLI_CNFG_WRITE_REQ = BLE_SERVS_ATTR_EVENT(BLE_GATS_SERV_CHGED_CLI_CNFG_IDX, BLE_SERVS_WRITE_REQ),
     BLE_GATS_EVENT_SERV_CHGED_CLI_CNFG_WRITE_COMP = BLE_SERVS_ATTR_EVENT(BLE_GATS_SERV_CHGED_CLI_CNFG_IDX, BLE_SERVS_WRITE_COMP),
     BLE_GATS_EVENT_SERV_CHGED_CLI_CNFG_READ_REQ = BLE_SERVS_ATTR_EVENT(BLE_GATS_SERV_CHGED_CLI_CNFG_IDX, BLE_SERVS_READ_REQ),
-    /* Toggle LED */
-    BLE_GATS_EVENT_TOGGLE_WRITE_REQ = BLE_SERVS_ATTR_EVENT(BLE_GATS_TOGGLE_IDX, BLE_SERVS_WRITE_REQ),
-    BLE_GATS_EVENT_TOGGLE_WRITE_COMP = BLE_SERVS_ATTR_EVENT(BLE_GATS_TOGGLE_IDX, BLE_SERVS_WRITE_COMP),
-    BLE_GATS_EVENT_TOGGLE_READ_REQ = BLE_SERVS_ATTR_EVENT(BLE_GATS_TOGGLE_IDX, BLE_SERVS_READ_REQ),
 } e_ble_gats_event_t;
 
 /***************************************************************************//**

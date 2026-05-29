@@ -66,9 +66,9 @@
  *  -------+-------------------+-------------+----------------------------------+---------------
  *  0x0010 | 0x02,0x29         | RD,WR       | 0x00,0x00                        | Client Characteristic Configuration descriptor
  *  -------+-------------------+-------------+----------------------------------+---------------
- *  0x0011 | 0x28,0x03         | RD          | 0x0A,0x12,0x00,0xe9,0x2a,0x2c... | Toggle LED characteristic Declaration
+ *  0x0011 | 0x28,0x03         | RD          | 0x0A,0x12,0x00,0xd3,0xb7,0xfe... | Toggle Blue LED characteristic Declaration
  *  -------+-------------------+-------------+----------------------------------+---------------
- *  0x0012 | 0xe9,0x2a,0x2c... | RD,WR       | 0x00,0x00                        | Toggle LED characteristic value
+ *  0x0012 | 0xd3,0xb7,0xfe... | RD,WR       | 0x00                             | Toggle Blue LED characteristic value
  *  ============================================================================================
  *  Immediate Alert Service
  *  ============================================================================================
@@ -133,8 +133,8 @@ static const uint8_t gs_gatt_const_uuid_arr[] =
     /* Client Characteristic Configuration : 38 */
     0x02, 0x29,
 
-    /* Toggle LED : 40 */
-    0xe9, 0x2a, 0x2c, 0x93, 0x90, 0xae, 0x58, 0x84, 0x84, 0x4b, 0x7f, 0xdb, 0x32, 0xf6, 0xa6, 0x3f,
+    /* Toggle Blue LED : 40 */
+    0xd3, 0xb7, 0xfe, 0xff, 0x7f, 0xeb, 0x5b, 0xb0, 0xbc, 0x47, 0xd2, 0xdb, 0x2c, 0xbd, 0xf9, 0x59,
 
     /* Immediate Alert Service : 56 */
     0x02, 0x18,
@@ -164,8 +164,8 @@ static uint8_t gs_gatt_value_arr[] =
     /* Service Changed : Client Characteristic Configuration */
     0x00, 0x00,
 
-    /* Toggle LED */
-    0, 0,
+    /* Toggle Blue LED */
+    0,
 
     /* Alert Level */
     0x00,
@@ -208,10 +208,10 @@ static const uint8_t gs_gatt_const_value_arr[] =
     0x0F, 0x00, // Attr Handle
     0x05, 0x2A, // UUID
 
-    /* Toggle LED */
+    /* Toggle Blue LED */
     0x0A,       // Properties
     0x12, 0x00, // Attr Handle
-    0xe9, 0x2a, 0x2c, 0x93, 0x90, 0xae, 0x58, 0x84, 0x84, 0x4b, 0x7f, 0xdb, 0x32, 0xf6, 0xa6, 0x3f, // UUID
+    0xd3, 0xb7, 0xfe, 0xff, 0x7f, 0xeb, 0x5b, 0xb0, 0xbc, 0x47, 0xd2, 0xdb, 0x2c, 0xbd, 0xf9, 0x59, // UUID
 
     /* Included Service : GATT Service */
     0x0C, 0x00, // Start Handle
@@ -351,7 +351,7 @@ static const st_ble_gatts_db_uuid_cfg_t gs_gatt_type_table[] =
         0x0000,
     },
 
-    /* 12 : Toggle LED */
+    /* 12 : Toggle Blue LED */
     {
         /* UUID Offset */
         40,
@@ -675,7 +675,7 @@ static const st_ble_gatts_db_attr_cfg_t gs_gatt_db_attr_table[] =
     },
 
     /* Handle : 0x0011 */
-    /* Toggle LED : Characteristic Declaration */
+    /* Toggle Blue LED : Characteristic Declaration */
     {
         /* Properties */
         BLE_GATT_DB_READ,
@@ -692,14 +692,14 @@ static const st_ble_gatts_db_attr_cfg_t gs_gatt_db_attr_table[] =
     },
 
     /* Handle : 0x0012 */
-    /* Toggle LED */
+    /* Toggle Blue LED */
     {
         /* Properties */
         BLE_GATT_DB_READ | BLE_GATT_DB_WRITE,
         /* Auxiliary Properties */
         BLE_GATT_DB_FIXED_LENGTH_PROPERTY | BLE_GATT_DB_128_BIT_UUID_FORMAT,
         /* Value Size */
-        2,
+        1,
         /* Next Attribute Type Index */
         0x0000,
         /* UUID Offset */
@@ -773,7 +773,7 @@ static const st_ble_gatts_db_attr_cfg_t gs_gatt_db_attr_table[] =
         /* UUID Offset */
         58,
         /* Value */
-        (uint8_t *)(gs_gatt_value_arr + 144),
+        (uint8_t *)(gs_gatt_value_arr + 143),
     },
 
 };
@@ -852,7 +852,7 @@ static const st_ble_gatts_db_char_cfg_t gs_gatt_characteristic[] =
         1,
     },
 
-    /* 6 : Toggle LED */
+    /* 6 : Toggle Blue LED */
     {
         /* Number of Attributes */
         {
